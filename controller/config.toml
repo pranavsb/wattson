@@ -2,7 +2,7 @@
 total_power_budget = 100
 # total number of agents, will wait for all agents to start and contact controller before calculating power caps
 total_agent_count = 2
-# power priority, primary vs replica
+# power priority, primary vs replica. can use application ranking (in case of colocation) or task priority in future
 power_priority = "primary_replica"
 
 # hardcoded constants, may support others in future:
