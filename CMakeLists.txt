@@ -6,10 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(agent)
 
 add_executable(wattson_agent
-        agent/agent.cpp "powercap/powercap_interface.cpp")
+        agent/agent.cpp "powercap/powercap_interface.cpp" powercap/dummy_powercap.cpp)
 
 add_executable(wattson_controller
-        controller/controller.cpp "powercap/powercap_interface.cpp")
+        controller/controller.cpp)
 
 
 
