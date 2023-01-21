@@ -6,7 +6,7 @@ Here is Wattson explained in 3 simple diagrams:
 
 ![Wattson architecture diagram showing Controller getting power readings from multiple Agents - step 1](wattson_architecture_diagram_1.png)
 
-2. We see that the Primary and one Replica #2 node are hitting their budget limit, they need more power. We can take some excess power from Replica #1, which doesn't need it. To ensure we stay within the total budget at all times, we need to decrease Replica #1's budget and get an ACK before increasing any other node's budget. In  other words, the total allocated budget at all times must be 100 W or less.
+2. We see that the Primary and Replica #2 node are hitting their budget limit, they need more power. We can take some excess power from Replica #1, which doesn't need it. To ensure we stay within the total budget at all times, we need to decrease Replica #1's budget and get an ACK before increasing any other node's budget. In  other words, the total allocated budget at all times must be 100 W or less.
 
 ![Wattson architecture diagram showing Controller decreasing a node's power budget - step 2](wattson_architecture_diagram_2.png)
 
