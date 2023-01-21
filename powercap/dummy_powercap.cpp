@@ -1,16 +1,17 @@
 #include "powercap_interface.cpp"
 
-class DummyPowercap:PowercapInterface {
-	public:
-		float currentPower = 11.0;
+class DummyPowercap : public PowercapInterface {
+private:
+    float current_power_ = 11.0;
 
-		bool setPowercap(float powercapInWatts) override {
-			currentPower = powercapInWatts;
-			return true;
-		}
+public:
+    bool SetPowercap(float powercapInWatts) override {
+        current_power_ = powercapInWatts;
+        return true;
+    }
 
-		float getPowerReading() override {
-            // low power reading, well within budget
-			return currentPower - 4.0;
-		}
+    float GetPowerReading() override {
+        // low power reading, well within budget
+        return current_power_ - 4.0;
+    }
 };
