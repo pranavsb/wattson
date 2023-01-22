@@ -4,3 +4,5 @@ controller_endpoint = "ms0833.utah.cloudlab.us"
 default_powercap = 10
 # whether current node is primary or replica
 is_primary = false
+# send power reading to controller with this frequency (in seconds)
+power_reading_period = 3
