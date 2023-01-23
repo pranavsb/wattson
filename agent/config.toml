@@ -1,7 +1,8 @@
 # periodically send power readings and application hints to the controller
-controller_endpoint = "ms0833.utah.cloudlab.us"
+controller_endpoint = "localhost"
+controller_port = 5757
 # power cap in watts enforced when agent is first launched, any increase must be approved by controller
-default_powercap = 10
+default_powercap = 15
 # whether current node is primary or replica
 is_primary = false
 # send power reading to controller with this frequency (in seconds)
