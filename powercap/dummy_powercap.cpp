@@ -2,7 +2,7 @@
 
 class DummyPowercap : public PowercapInterface {
 private:
-    float current_power_ = 15.0;
+    float current_power_ = 15.12;
 
 public:
     bool SetPowercap(float powercapInWatts) override {
