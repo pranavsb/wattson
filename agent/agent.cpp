@@ -80,6 +80,7 @@ public:
 //            std::thread write_thread(&Agent::SendPowerReadings, this, std::move(conn.clone()));
 
             SendPowerReadings(std::move(conn));
+            read_thread.join();
         }
 
 
