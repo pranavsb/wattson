@@ -14,7 +14,12 @@ So, Wattson is closer to [PoDD](https://dl.acm.org/doi/pdf/10.1145/3295500.33561
 
 To understand what happens after getting the readings, [click here](docs/README.md) to see Wattson explained in 3 simple diagrams.
 
+### Using Wattson
+
+We're using [sockpp](https://github.com/fpagliughi/sockpp) as a static library dependency for socket communication. Note that `lib/libsockpp.a` has been compiled on MacOS (for local development) for now.
+Wattson plans to support Linux - since production servers widely use Linux and RAPL or other power-capping typically support Linux.
+
 ### Related work:
-* PoDD: power-capping dependent distributed applications - Zhang et al, 2019 - [PDF](https://dl.acm.org/doi/pdf/10.1145/3295500.3356174)
-* Dynamo: Facebook’s Data Center-Wide Power Management System - Wu et al, 2016 - [Link](https://research.facebook.com/publications/dynamo-facebooks-data-center-wide-power-management-system/)
-* Maximizing Performance Under a Power Cap: A Comparison of Hardware, Software, and Hybrid Techniques - Zhang el al, 2016 - [Link](https://dl.acm.org/doi/10.1145/2872362.2872375)
+* PoDD: power-capping dependent distributed applications - Zhang et al., 2019 - [PDF](https://dl.acm.org/doi/pdf/10.1145/3295500.3356174)
+* Dynamo: Facebook’s Data Center-Wide Power Management System - Wu et al., 2016 - [Link](https://research.facebook.com/publications/dynamo-facebooks-data-center-wide-power-management-system/)
+* Maximizing Performance Under a Power Cap: A Comparison of Hardware, Software, and Hybrid Techniques - Zhang et al., 2016 - [Link](https://dl.acm.org/doi/10.1145/2872362.2872375)
