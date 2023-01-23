@@ -6,7 +6,7 @@ Initially, the focus is on the distributed protocol and creating general interfa
 We chose to use RAPL as the power capping mechanism and support Primary-Replica priority, that is, if two nodes are both hitting the limit of their allocated power, the Primary node will be preferred over the Replica.
 
 Wattson differs from FB's Dynamo in that it aims to optimize performance of a cluster, not merely act as "insurance" for power usage. It differs from approaches like [PUPiL](https://dl.acm.org/doi/10.1145/2872362.2872375) in that it aims to optimize performance within a power budget for a cluster of nodes, and can leverage systems like PUPiL to optimize single-node performance given the single node's power allocation. In other words, Wattson is a dynamic, feedback-based power management framework that calculates each node's power allocation at any point of time. Given this calculation, we can use RAPL or PUPiL or any other system to enforce this power limit on the node while extracting maximum performance. 
-So, Wattson is closer to [PoDD](https://dl.acm.org/doi/pdf/10.1145/3295500.3356174) in it's aim.
+So, Wattson is closer to [PoDD](https://dl.acm.org/doi/pdf/10.1145/3295500.3356174) in its aim.
 
 ### Wattson in a single diagram:
 
@@ -16,7 +16,7 @@ To understand what happens after getting the readings, [click here](docs/README.
 
 ### Using Wattson
 
-We're using [sockpp](https://github.com/fpagliughi/sockpp) as a static library dependency for socket communication. Note that `lib/libsockpp.a` has been compiled on MacOS (for local development) for now.
+We're using [sockpp](https://github.com/fpagliughi/sockpp) as a static library dependency for socket communication. Note that `libs/libsockpp.a` has been compiled on MacOS (for local development) for now.
 Wattson plans to support Linux - since production servers widely use Linux and RAPL or other power-capping typically support Linux.
 
 ### Related work:
