@@ -13,7 +13,7 @@ private:
     std::string controller_endpoint_;
     in_port_t controller_port_;
     bool is_primary_;
-    int power_reading_period_;
+    ssize_t power_reading_period_;
 
 
     void SendPowerReadings(sockpp::tcp_connector conn) {
@@ -23,13 +23,13 @@ private:
         char msgbuf[buf_size];
         while (true) {
             float current_power = powercap_interface_->GetPowerReading();
-            std::cout << "Send power reading " << current_power << "\n";
+            std::cout << "Send power reading " << current_power << std::endl;
             int is_primary = is_primary_ ? 1 : 0;
 
             std::memcpy(msgbuf, &is_primary, sizeof(int));
-            std::memcpy(msgbuf, &current_power, sizeof(float ));
-            if (conn.write(msgbuf) != buf_size) {
-                std::cout << "Error sending power reading\n";
+            std::memcpy(msgbuf + sizeof(int), &current_power, sizeof(float));
+            if (conn.write(msgbuf, buf_size) != buf_size) {
+                std::cout << "Error sending power reading" << std::endl;
                 break;
             }
             std::this_thread::sleep_for(std::chrono::seconds(power_reading_period_));
@@ -38,13 +38,15 @@ private:
 
     void ReceivePowercap(sockpp::tcp_socket read_socket) {
         // TODO note that this implementation is currently not portable across machines (differing endianness or 32 vs 64 bit machines)
+        std::cout << "Receive powercap" << std::endl;
         float powercap;
-        while (read_socket.read_n(&powercap, sizeof powercap) > 0) {
+        while (read_socket.read_n(&powercap, sizeof(powercap)) > 0) {
             // received new powercapping instruction from server
-            std::cout << "New powercapping instruction from server " << powercap << "\n";
+            std::cout << "New powercapping instruction from server " << powercap << std::endl;
             powercap_interface_->SetPowercap(powercap);
-            std::cout << "Set new powercap " << powercap << "\n";
+            std::cout << "Set new powercap " << powercap << std::endl;
         }
+        std::cout << "Shutdown socket" << std::endl;
         read_socket.shutdown();
     }
 
@@ -59,39 +61,31 @@ private:
 
 public:
     explicit Agent(std::unique_ptr<PowercapInterface> &&powercapInterface = {}) : powercap_interface_(std::move(powercapInterface)) {
-//        std::thread background_thread(&Agent::AgentRunner, this);
         ParseConfig();
         sockpp::initialize();
 
         // Agent keeps trying to connect if connection breaks
-        // TODO something like exponential backoff?
         while (true) {
             sockpp::tcp_connector conn({controller_endpoint_, controller_port_});
             if (!conn) {
+                // retry after one second
+                // TODO something like exponential backoff?
+                std::this_thread::sleep_for(std::chrono::seconds(1));
                 continue; // retry conn
             }
-            std::cout << "Created a connection from " << conn.address() << std::endl;
+            std::cout << "Connected to controller" << std::endl;
 
             // Create a read thread and send socket clone
             // Read thread will wait for new powercap instructions from controller
             // Write thread will periodically send power readings
             std::thread read_thread(&Agent::ReceivePowercap, this, std::move(conn.clone()));
-
-//            std::thread write_thread(&Agent::SendPowerReadings, this, std::move(conn.clone()));
-
             SendPowerReadings(std::move(conn));
             read_thread.join();
         }
-
-
-//        AgentRunner();
     }
 };
 
 int main(int argc, char *argv[]) {
-    auto config = toml::parse_file("../agent/config.toml");
-
     // let's use DummyPowercap for now
     Agent agent(std::make_unique<DummyPowercap>());
-    std::cout << "agent launched\n";
 }
