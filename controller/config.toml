@@ -2,11 +2,13 @@
 total_power_budget = 100
 # total number of agents, will wait for all agents to start and contact controller before calculating power caps
 total_agent_count = 2
+# port on which to listen for incoming connections from clients
+port = 5757
+
+# controller algorithm parameters - hardcoded constants, may support others in future:
+
 # power priority, primary vs replica. can use application ranking (in case of colocation) or task priority in future
 power_priority = "primary_replica"
-
-# hardcoded constants, may support others in future:
-
 # algorithm to use to enforce power cap on the agent, wattson's job is only to monitor and calculate power caps
 algorithm = "RAPL"
 # power mode, conservative ensures that the power usage doesn't exceed the total budget at any point
