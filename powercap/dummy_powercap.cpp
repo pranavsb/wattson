@@ -1,5 +1,14 @@
 #include "powercap_interface.cpp"
 
+/**
+ * Implementation of PowercapInterface used for testing.
+ * Does NOT actually enforce the powercap on the machine.
+ *
+ * Just stores a variable to act as the powercap set. (Note that this is not stored on disk so not immune to crashes.)
+ *
+ * In the future, we plan to support generating virtual workloads with random distributions similar to power
+ * characteristics of real machines, to run simulations with multiple machines.
+ */
 class DummyPowercap : public PowercapInterface {
 private:
     float current_power_ = 15.12;
